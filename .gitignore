@@ -1,6 +1,5 @@
 *.json
 __pycache__
-*.txt
 misc
 indexdir
 *.vscode
