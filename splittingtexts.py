@@ -72,6 +72,7 @@ def get_sents(filename):
                                 temp += " "
                         break
                 d_sents[line] = temp
+                print(temp)
             line = outfile.readline()
     #make dictionary and put second value as the subject of sentence
     return d_sents
