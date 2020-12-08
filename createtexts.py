@@ -78,16 +78,18 @@ for i in range(len(test_sent)):
         #if chunk.root.dep_ == "nsubj":
         #    print(chunk.text)
 
-print(len(test_sent))
-print(len(subject))
-'''
+#print(len(test_sent))
+#print(len(subject))
+
 with open('combine.txt', 'r') as outfile:
     temp = outfile.readline()
     while temp != '':
         print(temp)      
         temp = outfile.readline()
+
 '''
 small_test = nlp(str(',D^{k}_{x}(u_{x}-u^{2}))]$$ into the equation $$v_{t}=(D^{3}_{x}+4vD_{x}+2v_{x})[s(x,v,{{\partial v}\over{\partial x }},'))
 for chunk in small_test:
     if chunk.lemma_.isalpha(): print(chunk.lemma_)
+'''
         

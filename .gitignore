@@ -1,2 +1,6 @@
+*.json
+__pycache__
 *.txt
-arxiv-metadata-oai-snapshot.json
+misc
+indexdir
+*.vscode

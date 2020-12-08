@@ -5,66 +5,69 @@ import os.path
 from whoosh.qparser import QueryParser
 import sys
 import os
+#from splittingtexts import get_subject, get_related
+    
+class whooshFinder:
+    def __init__(self):
+        if not os.path.exists("indexdir"):
+            os.mkdir("indexdir")
+        global schema
+        global ix
+        schema = Schema(title=TEXT(stored=True), path=ID(stored=True), content=TEXT(stored = True))
+        ix = index.create_in("indexdir", schema)
 
-def whooshSetup():
-    global schema
-    global ix
-    schema = Schema(title=TEXT(stored=True), path=ID(stored=True), content=TEXT(stored = True))
-    ix = index.create_in("indexdir", schema)
-
-def whooshFind(check):
-    if not os.path.exists("indexdir"):
-        os.mkdir("indexdir")
-
-    if check == "":
-        whooshSetup()
         writer = ix.writer()
-        temp = ""
+        temp = "Example of hello world"
         for i in range(3):
-            temp += "Example of hello world"
+            temp += "Example of hello world" * 5
             writer.add_document(content=temp)
         '''
         writer.add_document(content=open("testfirst.txt", 'r').read())
         writer.add_document(content=u"This is the second example hello world.")
         writer.add_document(content=u"More examples. Examples are many.")
         '''
-        writer.add_document(content=open("combine.txt", 'r').read())
         writer.commit()
 
-    if check != "":
-        with ix.searcher() as searcher:
-            query = QueryParser("content", ix.schema).parse(check)
-            results = searcher.search(query, terms=True)
-     
-            for r in results:
-                print (r, r.score)
-                # Was this results object created with terms=True?
-                if results.has_matched_terms():
-                    # What terms matched in the results?
-                    print(results.matched_terms())
-         
-            # What terms matched in each hit?
-            print ("matched terms")
-            for hit in results:
-                print(hit.matched_terms())
+    def whooshFind(self, check):
+        endpoint = []
+        if check != "":
+            with ix.searcher() as searcher:
+                query = QueryParser("content", ix.schema).parse(check)
+                results = searcher.search(query)
+        
+                for r in results:
+                    endpoint.append(r['content'])
+                    #print (r, r.score)
+                    # Was this results object created with terms=True?
+                    #if results.has_matched_terms():
+                        # What terms matched in the results?
+                        #print(results.matched_terms())
+            '''
+                # What terms matched in each hit?
+                print ("matched terms")
+                for hit in results:
+                    print(hit.matched_terms())
 
-        found = results.scored_length()
-        if results.has_exact_length():
-            print("Scored", found, "of exactly", len(results), "documents")
-        else:
-            low = results.estimated_min_length()
-            high = results.estimated_length()
- 
-            print("Scored", found, "of between", low, "and", high, "documents")
+            found = results.scored_length()
+            
+            if results.has_exact_length():
+                print("Scored", found, "of exactly", len(results), "documents")
+            else:
+                low = results.estimated_min_length()
+                high = results.estimated_length()
+    
+                print("Scored", found, "of between", low, "and", high, "documents")
+            '''
+        print(endpoint)
+        return endpoint
 
 if __name__ == "__main__":
-    whooshFind(sys.argv[1])
-    check = ""
+    find = whooshFinder()
     while True:
         check = input ("Enter keywords: ")
         if check == 'stop':
             break
-        whooshFind(check)
+        find.whooshFind(check)
 
 
 #CREATE DOCUMENTS CONTAINING THE SAME SUBJECTS AND PUT IT ALL IN ONE TEXT FILE
