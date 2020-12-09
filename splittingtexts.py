@@ -72,7 +72,7 @@ def get_sents(filename):
                                 temp += " "
                         break
                 d_sents[line] = temp
-                print(temp)
+                #print(temp)
             line = outfile.readline()
     #make dictionary and put second value as the subject of sentence
     return d_sents
@@ -103,13 +103,14 @@ def get_subject(lines, index):
                         
     return subject
 
-def get_related(lines, subject, check):
+def get_related(lines, check):
     line = ""
-    for i in len(subject):
-        if subject[i] != "-":
-            if check == subject[i]:
-                line += lines[i]
+    for key in lines:
+        if lines[key] != "-":
+            if lines[key].strip() == check.strip():
+                line += key
                 line += " "
+                lines[key] = "-"
     return line
 
 def get_subject_two(lines, subj):
@@ -135,32 +136,6 @@ def get_subject_two(lines, subj):
             break         
     return subject
 
-def get_subject_dict(lines, index):
-    subject = []
-    #print("DONE")
-    count = 0
-    for i in lines:
-        about_test = nlp(i)
-        #test_sent = list(about_test)
-        temp = ""
-        #for i in range(len(test_sent)):
-        for chunk in about_test.noun_chunks:
-            temp = ""
-            #print(chunk.text, chunk.root.text, chunk.root.dep_, chunk.root.head.text)
-            if chunk.root.dep_ == 'nsubj' or chunk.root.dep_ == 'nsubjpass': 
-                for p in chunk:
-                    if not p.is_stop and str(p).isalpha():
-                        temp += p.lemma_
-                        temp += " "
-                    
-            if len(temp) > 1: 
-                subject.append(i)
-        count += 1
-        print(count)
-        break
-                        
-    return subject
-
 def removeFiles(paths):
     try:
         for i in paths:
@@ -169,10 +144,10 @@ def removeFiles(paths):
         print("Error: %s : %s" % ("extracted", e.strerror))
 
 if __name__ == "__main__":
-    decompress("compressed.tar.gz")
-    get_sents("small_combine.txt")
-    compress("compressed.tar.gz", ["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
-    removeFiles(["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
+    #decompress("compressed.tar.gz")
+    print(get_related(get_sents("small_combine.txt"), "technique"))
+    #compress("compressed.tar.gz", ["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
+    #removeFiles(["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
     
     
 
