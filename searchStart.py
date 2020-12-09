@@ -40,7 +40,7 @@ class whooshFinder:
                 results = searcher.search(query)
         
                 for r in results:
-                    endpoint.append(r['content'])
+                    endpoint.append(r['content'].replace('\n', ''))
                     #print (r, r.score)
                     # Was this results object created with terms=True?
                     #if results.has_matched_terms():

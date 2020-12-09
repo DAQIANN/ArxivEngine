@@ -111,7 +111,7 @@ def get_related(lines, check):
                 line += key
                 line += " "
                 lines[key] = "-"
-    return line
+    return lines, line
 
 def get_subject_two(lines, subj):
     subject = []
@@ -143,9 +143,9 @@ def removeFiles(paths):
     except OSError as e:
         print("Error: %s : %s" % ("extracted", e.strerror))
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     #decompress("compressed.tar.gz")
-    print(get_related(get_sents("small_combine.txt"), "technique"))
+    #print(get_related(get_sents("small_combine.txt"), "technique"))
     #compress("compressed.tar.gz", ["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
     #removeFiles(["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
     
