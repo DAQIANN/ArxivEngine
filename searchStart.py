@@ -62,20 +62,19 @@ class whooshFinder:
     
                 print("Scored", found, "of between", low, "and", high, "documents")
             '''
-        print(endpoint)
         return endpoint
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     #decompress("compressed.tar.gz")
     #get_sents("small_combine.txt")
     #compress("compressed.tar.gz", ["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
     #removeFiles(["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
-    find = whooshFinder()
-    while True:
-        check = input ("Enter keywords: ")
-        if check == 'stop':
-            break
-        find.whooshFind(check)
+    #find = whooshFinder()
+    #while True:
+        #check = input ("Enter keywords: ")
+        #if check == 'stop':
+            #break
+        #find.whooshFind(check)
 
 
 #CREATE DOCUMENTS CONTAINING THE SAME SUBJECTS AND PUT IT ALL IN ONE TEXT FILE

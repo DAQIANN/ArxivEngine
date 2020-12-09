@@ -11,6 +11,10 @@ app = Flask(__name__)
 #Run: flask run
 # this one can just do python3 starter.py
 
+def start():
+    global find 
+    find = whooshFinder()
+
 @app.route('/form')
 def form():
     return render_template('form.html')
@@ -21,11 +25,8 @@ def data():
         return f"The URL /data is accessed directly. Try going to '/form' to submit form"
     if request.method == 'POST':
         form_data = request.form
-        lines = get_sents("combine.txt")
-        print(form_data["Index"])
-        subj = get_subject(lines, form_data["Index"])
-        print(subj[0])
-        return render_template('data.html',form = subj )
+        lines = find.whooshFind(form_data["Index"])
+        return render_template('data.html',form = lines )
     if request.method == 'return':
         form()
  
@@ -34,5 +35,6 @@ def data():
 
 
 if __name__ == "__main__":
-     # Launch the Flask dev server
-     app.run(host="localhost", debug=True)
+    # Launch the Flask dev server
+    start()
+    app.run(host="localhost", debug=True)
