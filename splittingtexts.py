@@ -161,16 +161,19 @@ def get_subject_dict(lines, index):
                         
     return subject
 
+def removeFiles(paths):
+    try:
+        for i in paths:
+            os.remove(i)
+    except OSError as e:
+        print("Error: %s : %s" % ("extracted", e.strerror))
+
 if __name__ == "__main__":
     decompress("compressed.tar.gz")
     get_sents("small_combine.txt")
     compress("compressed.tar.gz", ["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
-
-    try:
-        os.remove("arxiv-metadata-oai-snapshot.json")
-        os.remove("small_combine.txt")
-    except OSError as e:
-        print("Error: %s : %s" % ("extracted", e.strerror))
+    removeFiles(["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
+    
     
 
 
