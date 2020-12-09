@@ -5,7 +5,7 @@ import os.path
 from whoosh.qparser import QueryParser
 import sys
 import os
-#from splittingtexts import get_subject, get_related
+from splittingtexts import get_sents, get_related
     
 class whooshFinder:
     def __init__(self):
@@ -17,10 +17,14 @@ class whooshFinder:
         ix = index.create_in("indexdir", schema)
 
         writer = ix.writer()
-        temp = "Example of hello world"
-        for i in range(3):
-            temp += "Example of hello world" * 5
-            writer.add_document(content=temp)
+        temp = ""
+        lines = get_sents("small_combine.txt")
+        for key in lines:
+            temp = ""
+            if lines[key] != "-":
+                lines, temp = get_related(lines, lines[key])
+                writer.add_document(content=temp)
+            
         '''
         writer.add_document(content=open("testfirst.txt", 'r').read())
         writer.add_document(content=u"This is the second example hello world.")
@@ -62,6 +66,10 @@ class whooshFinder:
         return endpoint
 
 if __name__ == "__main__":
+    #decompress("compressed.tar.gz")
+    #get_sents("small_combine.txt")
+    #compress("compressed.tar.gz", ["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
+    #removeFiles(["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
     find = whooshFinder()
     while True:
         check = input ("Enter keywords: ")
