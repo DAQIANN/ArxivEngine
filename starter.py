@@ -25,16 +25,15 @@ def data():
         return f"The URL /data is accessed directly. Try going to '/form' to submit form"
     if request.method == 'POST':
         form_data = request.form
-        lines = find.whooshFind(form_data["Index"])
+        lines = {}
+        lines[form_data["Index"]] = find.whooshFind(form_data["Index"])
         return render_template('data.html',form = lines )
     if request.method == 'return':
         form()
  
  
-#app.run(host='localhost', port=5000)
-
-
 if __name__ == "__main__":
     # Launch the Flask dev server
+    print("Please wait while the data is being prepared...")
     start()
-    app.run(host="localhost", debug=True)
+    app.run(host="localhost", debug=True, use_reloader=False)

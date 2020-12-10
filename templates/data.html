@@ -1,9 +1,44 @@
-<ul>
-{% for value in form %}
-    <li> {{value}}</li>
-{% endfor %}
-</ul>
+<head>
+    <style>
+        footer { 
+            position: left; 
+            clear: both; 
+            color: #ffffff; 
+            background-color: rgb(75, 75, 75); 
+            text-align:center; 
+            height: 90px;	 
+            line-height: 18px; 
+            font-size: 80%; 
+            margin-left:-100%; 
+            margin-right:-100%; 
+        }  
+        a:link {
+            color: orange;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+    </style>
+    <p><b>Sentences relating to the inputted subject:</b></p>
+</head>
+
+<body>
+    <ul>
+    {% for key,value in form.items() %}
+        {% for v in value %}
+            <li> {{v}}</li>
+        {% endfor %}
+    {% endfor %}
+    </ul>
+</body>
 
 <form action="/form" method = "return">
     <p><input type = "submit" value = "Return to Search" /></p>
 </form>
+
+<footer>
+    <p>Author: Daniel Qian</p>
+    <p>University of Illinois at Urbana Champaign</p>
+    <p><a href="mailto:danielq3@illinois.edu">danielq3@illinois.edu</a></p>
+</footer>
+
