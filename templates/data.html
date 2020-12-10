@@ -25,10 +25,8 @@
 <body>
     <p>Sentences relating to the inputted subject:</p>
     <ul>
-    {% for key,value in form.items() %}
-        {% for v in value %}
-            <li> {{v}}</li>
-        {% endfor %}
+    {% for value in form %}
+        <li> {{value}}</li>
     {% endfor %}
     </ul>
 </body>

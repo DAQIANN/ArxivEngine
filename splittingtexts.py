@@ -101,7 +101,7 @@ def get_related(lines, check):
         if lines[key] != "-":
             if lines[key].strip() == check.strip():
                 line += key
-                line += " "
+                line += "."
                 lines[key] = "-"
     return lines, line
 

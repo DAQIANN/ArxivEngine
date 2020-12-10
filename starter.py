@@ -25,8 +25,7 @@ def data():
         return f"The URL /data is accessed directly. Try going to '/form' to submit form"
     if request.method == 'POST':
         form_data = request.form
-        lines = {}
-        lines[form_data["Index"]] = find.whooshFind(form_data["Index"])
+        lines = find.whooshFind(form_data["Index"])
         return render_template('data.html',form = lines )
     if request.method == 'return':
         form()

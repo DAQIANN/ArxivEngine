@@ -24,16 +24,12 @@ class whooshFinder:
             if lines[key] != "-":
                 lines, temp = get_related(lines, lines[key])
                 writer.add_document(content=temp)
-            
-        '''
-        writer.add_document(content=open("testfirst.txt", 'r').read())
-        writer.add_document(content=u"This is the second example hello world.")
-        writer.add_document(content=u"More examples. Examples are many.")
-        '''
         writer.commit()
 
     def whooshFind(self, check):
         endpoint = []
+        scores = []
+        total = 0.0
         if check != "":
             with ix.searcher() as searcher:
                 query = QueryParser("content", ix.schema).parse(check)
@@ -42,42 +38,29 @@ class whooshFinder:
                 for r in results:
                     endpoint.append(r['content'].replace('\n', ''))
                     #print (r, r.score)
+                    scores.append(r.score)
+                    total += r.score
                     # Was this results object created with terms=True?
                     #if results.has_matched_terms():
                         # What terms matched in the results?
                         #print(results.matched_terms())
-            '''
+                average = (float)(total/len(endpoint))
                 # What terms matched in each hit?
-                print ("matched terms")
-                for hit in results:
-                    print(hit.matched_terms())
+        together = []
+        for i in range(len(endpoint)):
+            if scores[i] > average:
+                together = together + endpoint[i].split(".")
+                together.remove('')
+        return together
 
-            found = results.scored_length()
-            
-            if results.has_exact_length():
-                print("Scored", found, "of exactly", len(results), "documents")
-            else:
-                low = results.estimated_min_length()
-                high = results.estimated_length()
-    
-                print("Scored", found, "of between", low, "and", high, "documents")
-            '''
-        return endpoint
-
-#if __name__ == "__main__":
+if __name__ == "__main__":
     #decompress("compressed.tar.gz")
     #get_sents("small_combine.txt")
     #compress("compressed.tar.gz", ["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
     #removeFiles(["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
-    #find = whooshFinder()
-    #while True:
-        #check = input ("Enter keywords: ")
-        #if check == 'stop':
-            #break
-        #find.whooshFind(check)
-
-
-#CREATE DOCUMENTS CONTAINING THE SAME SUBJECTS AND PUT IT ALL IN ONE TEXT FILE
-#THEN USING ABOVE FIND THE DOCUMENT IT'S IN
-
-#Get the part of the sentence before the first verb and then stop words it
+    find = whooshFinder()
+    while True:
+        check = input ("Enter keywords: ")
+        if check == 'stop':
+            break
+        print(find.whooshFind(check))
