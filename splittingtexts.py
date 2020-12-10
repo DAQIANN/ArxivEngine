@@ -35,12 +35,6 @@ def decompress(tar_file, members=None):
     # with progress bar
     # set the progress bar
     progress = tqdm(members)
-    '''
-    for member in progress:
-        tar.extract(member, path=path)
-        # set the progress description of the progress bar
-        progress.set_description(f"Extracting {member.name}")
-    '''
     # or use this
     tar.extractall(members=members)
     # close the file
@@ -50,7 +44,6 @@ def decompress(tar_file, members=None):
 nlp = spacy.load('en_core_web_sm')
 
 def get_sents(filename):
-    sents = []
     d_sents = {}
     with open(filename, 'r') as outfile:
         line = outfile.readline()
@@ -74,7 +67,6 @@ def get_sents(filename):
                 d_sents[line] = temp
                 #print(temp)
             line = outfile.readline()
-    #make dictionary and put second value as the subject of sentence
     return d_sents
 
 def get_subject(lines, index):
@@ -112,29 +104,6 @@ def get_related(lines, check):
                 line += " "
                 lines[key] = "-"
     return lines, line
-
-def get_subject_two(lines, subj):
-    subject = []
-    #print("DONE")
-    count = 0
-    for i in lines:
-        about_test = nlp(i)
-        #test_sent = list(about_test)
-        temp = ""
-        #for i in range(len(test_sent)):
-        for chunk in about_test.noun_chunks:
-            temp = ""
-            #print(chunk.text, chunk.root.text, chunk.root.dep_, chunk.root.head.text)
-            if chunk.root.dep_ == 'nsubj' or chunk.root.dep_ == 'nsubjpass': 
-                for p in chunk:
-                    if not p.is_stop and str(p).isalpha():
-                        temp += p.lemma_
-                        temp += " "
-                    
-            if len(temp) > 1 and (temp.strip() is subj.strip()): 
-                subject.append(i)
-            break         
-    return subject
 
 def removeFiles(paths):
     try:

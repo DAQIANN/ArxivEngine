@@ -1,6 +1,6 @@
 <head>
     <style>
-        footer { 
+        head,footer { 
             position: left; 
             clear: both; 
             color: #ffffff; 
@@ -19,10 +19,11 @@
         }
 
     </style>
-    <p><b>Sentences relating to the inputted subject:</b></p>
+    <p><b>Project: ArXiv Search Engine</b></p>
 </head>
 
 <body>
+    <p>Sentences relating to the inputted subject:</p>
     <ul>
     {% for key,value in form.items() %}
         {% for v in value %}
