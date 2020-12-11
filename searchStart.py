@@ -44,6 +44,8 @@ class whooshFinder:
                     #if results.has_matched_terms():
                         # What terms matched in the results?
                         #print(results.matched_terms())
+                if len(endpoint) == 0:
+                    return ["No Sentences Found."]
                 average = (float)(total/len(endpoint))
                 # What terms matched in each hit?
         together = []

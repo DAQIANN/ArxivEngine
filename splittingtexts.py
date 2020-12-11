@@ -47,11 +47,7 @@ def get_sents(filename):
     d_sents = {}
     with open(filename, 'r') as outfile:
         line = outfile.readline()
-        count = 0
-        while True:
-            if count > 10000:
-                break
-            count += 1
+        while line:
             if len(line) > 5:
                 #sents.append(line)
                 about_test = nlp(line)
