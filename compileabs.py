@@ -9,7 +9,7 @@ for line in open('arxiv-metadata-oai-snapshot.json', 'r'):
         break
     data.append(json.loads(line))
     count += 1
-    
+
 print(data[0]['abstract'].replace('\n', ' '))
 
 with open("small_combine.txt", "w") as outfile:

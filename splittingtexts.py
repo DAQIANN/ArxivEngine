@@ -60,7 +60,10 @@ def get_sents(filename):
                                 temp += p.lemma_
                                 temp += " "
                         break
-                d_sents[line] = temp
+                if temp.strip() not in d_sents:
+                    d_sents[temp.strip()] = line
+                else:
+                    d_sents[temp.strip()] = d_sents[temp.strip()] + line
                 #print(temp)
             line = outfile.readline()
     return d_sents
@@ -93,12 +96,15 @@ def get_subject(lines, index):
 
 def get_related(lines, check):
     line = ""
-    for key in lines:
+    if check.strip() in lines:
+        line = lines[check.strip()]
+        '''
         if lines[key] != "-":
             if lines[key].strip() == check.strip():
                 line += key
                 line += "."
                 lines[key] = "-"
+        '''
     return lines, line
 
 def removeFiles(paths):
@@ -108,9 +114,10 @@ def removeFiles(paths):
     except OSError as e:
         print("Error: %s : %s" % ("extracted", e.strerror))
 
-#if __name__ == "__main__":
+if __name__ == "__main__":
     #decompress("compressed.tar.gz")
-    #print(get_related(get_sents("small_combine.txt"), "technique"))
+    somethign, some = get_related(get_sents("small_combine.txt"), "technique")
+    print(some)
     #compress("compressed.tar.gz", ["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
     #removeFiles(["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
     
