@@ -61,9 +61,9 @@ def get_sents(filename):
                                 temp += " "
                         break
                 if temp not in d_sents:
-                    d_sents[temp] = line
+                    d_sents[temp] = line + '.'
                 else:
-                    d_sents[temp] = d_sents[temp] + line
+                    d_sents[temp] = d_sents[temp] + '.' + line
                 #print(temp)
             line = outfile.readline()
     return d_sents
@@ -114,10 +114,10 @@ def removeFiles(paths):
     except OSError as e:
         print("Error: %s : %s" % ("extracted", e.strerror))
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     #decompress("compressed.tar.gz")
-    somethign, some = get_related(get_sents("small_combine.txt"), "we")
-    print(some)
+    #somethign, some = get_related(get_sents("small_combine.txt"), "we")
+    #print(some)
     #compress("compressed.tar.gz", ["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
     #removeFiles(["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
     '''
