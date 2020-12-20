@@ -8,7 +8,7 @@ import os
 from splittingtexts import get_sents, get_related
     
 class whooshFinder:
-    def __init__(self):
+    def __init__(self, filename):
         if not os.path.exists("indexdir"):
             os.mkdir("indexdir")
         global schema
@@ -20,11 +20,10 @@ class whooshFinder:
         writer = ix.writer()
         #writer.add_document(title="Blah", content=u"Hello World Bruh Bruh")
         global lines
-        lines = get_sents("small_combine.txt")
+        lines = get_sents(filename)
         for key in lines:
-            if lines[key] != "-":
-                temp = get_related(lines, lines[key])
-                writer.add_document(title=key, content=temp)
+            temp = get_related(lines, key)
+            writer.add_document(title=key, content=temp)
         
         '''
         with ix.writer() as w:
@@ -65,7 +64,7 @@ class whooshFinder:
                         # What terms matched in the results?
                         #print(results.matched_terms())
                 if len(endpoint) == 0:
-                    return ["No Sentences Found."]
+                    return ["No Sentences Found.", ""]
                 #average = (float)(total/len(endpoint))
         return endpoint.split('.')
     

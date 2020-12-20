@@ -61,9 +61,9 @@ def get_sents(filename):
                                 temp += " "
                         break
                 if temp not in d_sents:
-                    d_sents[temp] = line + '.'
+                    d_sents[temp] = line.rstrip() + '.'
                 else:
-                    d_sents[temp] = d_sents[temp] + '.' + line
+                    d_sents[temp] = line.rstrip() + '.' + d_sents[temp]
                 #print(temp)
             line = outfile.readline()
     return d_sents
@@ -96,8 +96,8 @@ def get_subject(lines, index):
 
 def get_related(lines, check):
     line = ""
-    if check.strip() in lines:
-        line = lines[check.strip()]
+    if check in lines:
+        line = lines[check]
         '''
         if lines[key] != "-":
             if lines[key].strip() == check.strip():

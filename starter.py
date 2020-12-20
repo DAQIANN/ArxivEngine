@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 def start():
     global find 
-    find = whooshFinder()
+    find = whooshFinder("small_combine.txt")
 
 @app.route('/form')
 def form():
@@ -26,6 +26,7 @@ def data():
     if request.method == 'POST':
         form_data = request.form
         lines = find.whooshFind(form_data["Index"])
+        lines.remove('')
         return render_template('data.html',form = lines )
     if request.method == 'return':
         form()
