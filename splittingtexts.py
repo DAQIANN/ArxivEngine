@@ -60,10 +60,10 @@ def get_sents(filename):
                                 temp += p.lemma_
                                 temp += " "
                         break
-                if temp.strip() not in d_sents:
-                    d_sents[temp.strip()] = line
+                if temp not in d_sents:
+                    d_sents[temp] = line
                 else:
-                    d_sents[temp.strip()] = d_sents[temp.strip()] + line
+                    d_sents[temp] = d_sents[temp] + line
                 #print(temp)
             line = outfile.readline()
     return d_sents
@@ -105,7 +105,7 @@ def get_related(lines, check):
                 line += "."
                 lines[key] = "-"
         '''
-    return lines, line
+    return line
 
 def removeFiles(paths):
     try:
@@ -116,11 +116,24 @@ def removeFiles(paths):
 
 if __name__ == "__main__":
     #decompress("compressed.tar.gz")
-    somethign, some = get_related(get_sents("small_combine.txt"), "technique")
+    somethign, some = get_related(get_sents("small_combine.txt"), "we")
     print(some)
     #compress("compressed.tar.gz", ["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
     #removeFiles(["arxiv-metadata-oai-snapshot.json", "small_combine.txt"])
-    
+    '''
+    test = "We give a data structure that supports both operations in O(1) time on the RAM model and requires ${\cal B}(n,m) + o(n) + O(\lg \lg m)$ bits to store a set of size $n$, where ${\cal B}(n,m) = \ceil{\lg {m \choose n}}$ is the minimum number of bits required to store any $n$-element subset from a universe of size $m$"
+    rah = test.split()
+    diff_sent = ""
+    for i in rah:
+        if not rah.is_stop():
+            diff_sent += i
+            diff_sent += " "
+    print(diff_sent)
+    blob = nlp(test)
+    sentence = next(blob.sents)
+    for ent in sentence:
+        print(ent, ent.dep_)
+    '''
     
 
 

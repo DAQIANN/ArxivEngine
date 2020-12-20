@@ -5,7 +5,7 @@ nlp = spacy.load('en_core_web_sm')
 data = []
 count = 0
 for line in open('arxiv-metadata-oai-snapshot.json', 'r'):
-    if count > 10000:
+    if count > 500:
         break
     data.append(json.loads(line))
     count += 1
