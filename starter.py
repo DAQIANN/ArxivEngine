@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template
 from datetime import datetime
 from searchStart import whooshFinder
-from splittingtexts import get_subject, get_sents
+from splittingtexts import get_sents
 import json
 import spacy
 

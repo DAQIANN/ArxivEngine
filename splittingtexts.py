@@ -4,6 +4,7 @@ import tarfile
 from tqdm import tqdm
 import os
 
+nlp = spacy.load('en_core_web_sm')
 '''
 Compress and decompress code from https://www.thepythoncode.com/article/compress-decompress-files-tarfile-python
 '''
@@ -40,9 +41,6 @@ def decompress(tar_file, members=None):
     # close the file
     tar.close()
 
-
-nlp = spacy.load('en_core_web_sm')
-
 def get_sents(filename):
     d_sents = {}
     with open(filename, 'r') as outfile:
@@ -67,32 +65,6 @@ def get_sents(filename):
                 #print(temp)
             line = outfile.readline()
     return d_sents
-
-def get_subject(lines, index):
-    subject = []
-    #print("DONE")
-    count = 0
-    for i in lines:
-        about_test = nlp(i)
-        #test_sent = list(about_test)
-        temp = ""
-        #for i in range(len(test_sent)):
-        for chunk in about_test.noun_chunks:
-            temp = ""
-            #print(chunk.text, chunk.root.text, chunk.root.dep_, chunk.root.head.text)
-            if chunk.root.dep_ == 'nsubj' or chunk.root.dep_ == 'nsubjpass': 
-                for p in chunk:
-                    if not p.is_stop and str(p).isalpha():
-                        temp += p.lemma_
-                        temp += " "
-                    
-            if len(temp) > 1: 
-                subject.append(i)
-                break
-        count += 1
-        print(count)
-                        
-    return subject
 
 def get_related(lines, check):
     line = ""
