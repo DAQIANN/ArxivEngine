@@ -24,24 +24,6 @@ class whooshFinder:
         for key in lines:
             temp = get_related(lines, key)
             writer.add_document(title=key, content=temp)
-        
-        '''
-        with ix.writer() as w:
-            # Say we're indexing chapters (type=chap) and each chapter has a
-            # number of paragraphs (type=p)
-            with w.group():
-                w.add_document(type="chap", text="Chapter 1")
-                w.add_document(type="p", text="Able baker")
-                w.add_document(type="p", text="Bright morning")
-            with w.group():
-                w.add_document(type="chap", text="Chapter 2")
-                w.add_document(type="p", text="Car trip")
-                w.add_document(type="p", text="Dog eared")
-                w.add_document(type="p", text="Every day")
-            with w.group():
-                w.add_document(type="chap", text="Chapter 3")
-                w.add_document(type="p", text="Fine day")
-        '''
         writer.commit()
 
     def whooshFind(self, check):
