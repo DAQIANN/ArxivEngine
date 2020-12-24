@@ -22,8 +22,8 @@ class whooshFinder:
         global lines
         lines = get_sents(filename)
         for key in lines:
-            temp = get_related(lines, key)
-            writer.add_document(title=key, content=temp)
+            #temp = get_related(lines, key)
+            writer.add_document(title=key, content=lines[key])
         writer.commit()
 
     def whooshFind(self, check):
@@ -37,24 +37,10 @@ class whooshFinder:
         
                 for r in results:
                     endpoint += lines[r['title']].replace('\n', '')
-                    #print(r['content'].replace('\n', ''))
-                    #print (r, r.score)
-                    #scores.append(r.score)
-                    #total += r.score
-                    # Was this results object created with terms=True?
-                    #if results.has_matched_terms():
-                        # What terms matched in the results?
-                        #print(results.matched_terms())
                 if len(endpoint) == 0:
                     return ["No Sentences Found.", ""]
                 #average = (float)(total/len(endpoint))
         return endpoint.split('.')
-    
-    def otherFind(self, first, second):
-        with ix.searcher() as s:
-            r = s.search(query.Term("text", "day"))
-            for hit in r:
-                print(hit["text"])
 
 #if __name__ == "__main__":
     #decompress("compressed.tar.gz")
